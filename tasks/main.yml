@@ -1,0 +1,26 @@
+---
+
+- import_tasks: ssh-keys-bootstrap.yml
+  tags: bootstrap
+
+- import_tasks: ssh-keys.yml
+
+- import_tasks: others-wait.yml
+  tags: others
+
+- copy:
+    content: |
+      - src: {{ provisioner_role }}
+        version: {{ provisioner_role_version }}
+        name: provisioner_role
+    dest: /tmp/provisioner_requirement.yml
+  delegate_to: localhost
+
+- name: "install role {{ provisioner_role }}"
+  command: ansible-galaxy install -r /tmp/provisioner_requirement.yml
+  delegate_to: localhost
+
+- include_role: name=provisioner_role
+
+- import_tasks: bootstrap-end.yml
+  tags: bootstrap

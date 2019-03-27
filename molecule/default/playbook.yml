@@ -1,0 +1,42 @@
+---
+
+- name: run the main role
+  hosts: all
+  pre_tasks:
+    - name: update repositories cache
+      apt:
+        update_cache: yes
+    - package: name={{ item }} state=latest
+      with_items:
+        - curl
+        - jq
+        - iproute
+        - rsyslog
+        - ca-certificates
+        - sudo
+        - python-apt
+        - software-properties-common
+        - tar
+        - unzip
+        - bzip2
+        - gzip
+        - git
+  roles:
+    - role: entercloudsuite.consul
+      consul_version: 1.4.4
+      consul_config_validate: "{{ consul_user_home }}/bin/consul validate -config-format=json %s"
+      consul_configs:
+        main:
+          bind_addr: 0.0.0.0
+          client_addr: 0.0.0.0
+          node_name: "{{ ansible_hostname }}"
+          data_dir: "{{ consul_data_dir }}"
+          encrypt: "{{ consul_encrypt }}" # generate with consul keygen
+          enable_syslog: true
+          datacenter: automium
+          server: true
+          ui: true
+          bootstrap: true
+    - role: ansible-provisioner
+      provisioner_role: "git+https://github.com/geerlingguy/ansible-role-apache.git"
+      provisioner_role_version: "3.0.3"

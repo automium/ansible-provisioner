@@ -1,0 +1,19 @@
+---
+package:
+  provisioner:
+    installed: true
+service:
+  provisioner:
+    enabled: true
+    running: true
+user:
+  provisioner:
+    exists: true
+    groups:
+      - provisioner
+group:
+  provisioner:
+    exists: true
+process:
+  provisioner:
+    running: true

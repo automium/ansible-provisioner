@@ -1,0 +1,9 @@
+---
+
+consul: "127.0.0.1"
+consul_port: "8500"
+consul_datacenter: "automium"
+consul_encrypt: "K8n07GA/ZoANSmJ5zkvgOg=="
+provisioner_cluster_name: "cluster_name"
+provisioner_name: "name"
+provisioner_role: ""
