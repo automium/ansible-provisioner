@@ -2,7 +2,7 @@
 
 - name: wait until bootstrap node ends all the tasks
   uri:
-    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ provisioner_cluster_name }}/{{ provisioner_name }}/custom_bootstrap_end"
+    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_bootstrap_end"
     method: GET
     status_code: 200
     body: '{ "name": {{ ansible_hostname }}.node.{{ consul_datacenter }}.consul }'

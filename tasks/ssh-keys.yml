@@ -8,7 +8,7 @@
 
 - name: get private ssh key
   uri:
-    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ provisioner_cluster_name }}/{{ provisioner_name }}/custom_ssh_key"
+    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_ssh_key"
     method: GET
     status_code: 200
     body_format: json
@@ -30,7 +30,7 @@
 
 - name: get public ssh key
   uri:
-    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ provisioner_cluster_name }}/{{ provisioner_name }}/custom_ssh_key_pub"
+    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_ssh_key_pub"
     method: GET
     status_code: 200
     body_format: json

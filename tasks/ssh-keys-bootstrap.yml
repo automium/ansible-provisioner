@@ -23,7 +23,7 @@
 
 - name: put private ssh key
   uri:
-    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ provisioner_cluster_name }}/{{ provisioner_name }}/custom_ssh_key"
+    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_ssh_key"
     method: PUT
     status_code: 200
     body: "{{ ssh_key['content'] | b64decode }}"
@@ -34,7 +34,7 @@
 
 - name: put public ssh key
   uri:
-    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ provisioner_cluster_name }}/{{ provisioner_name }}/custom_ssh_key_pub"
+    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_ssh_key_pub"
     method: PUT
     status_code: 200
     body: "{{ ssh_key_pub['content'] | b64decode }}"

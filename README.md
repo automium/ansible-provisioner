@@ -25,8 +25,7 @@ Run with default vars:
       consul: "127.0.0.1"
       consul_port: "8500"
       consul_datacenter: "automium"
-      provisioner_cluster_name: "cluster_name"
-      provisioner_name: "name"
+      consul_path: "test/test"
       provisioner_role: "git+https://github.com/geerlingguy/ansible-role-apache.git"
       provisioner_role_version: "3.0.3"
 ```
