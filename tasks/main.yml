@@ -23,7 +23,8 @@
 
 - name: "install role {{ provisioner_role }}"
   command: ansible-galaxy install -r provisioner_role_requirement.yml -p roles
-  creates: roles/provisioner_role
+  args:
+    creates: roles/provisioner_role
   delegate_to: localhost
 
 - include_role:
