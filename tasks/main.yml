@@ -26,7 +26,9 @@
   creates: roles/provisioner_role
   delegate_to: localhost
 
-- include_role: name=provisioner_role
+- include_role:
+    name: provisioner_role
+    public: yes
 
 - import_tasks: bootstrap-end.yml
   tags: bootstrap
