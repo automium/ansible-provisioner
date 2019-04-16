@@ -4,6 +4,7 @@
   tags: bootstrap
 
 - import_tasks: ssh-keys.yml
+  when: ssh_keys == "true"
 
 - import_tasks: others-wait.yml
   tags: others
