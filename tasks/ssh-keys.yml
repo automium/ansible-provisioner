@@ -1,12 +1,12 @@
 ---
 
-- name: ensure /root/.ssh folder exist
+- name: ssh-keys | ensure /root/.ssh folder exist
   file:
     path: /root/.ssh
     state: directory
     mode: 0550
 
-- name: get private ssh key
+- name: ssh-keys | get private ssh key
   uri:
     url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_ssh_key"
     method: GET
@@ -17,18 +17,18 @@
   delay: 1
   retries: 6000
 
-- name: write private encrypted ssh key
+- name: ssh-keys | write private encrypted ssh key
   copy:
     content: "{{ ssh_key_consul.json[0] | json_query('Value') | b64decode }}"
     dest: /root/.ssh/id_rsa_enc
     mode: 0400
 
-- name: decrypt ssh keys
+- name: ssh-keys | decrypt ssh keys
   shell: openssl rsa -in /root/.ssh/id_rsa_enc -out /root/.ssh/id_rsa -passin pass:{{ consul_encrypt }} && chmod 400 /root/.ssh/id_rsa
   args:
     creates: /root/.ssh/id_rsa
 
-- name: get public ssh key
+- name: ssh-keys | get public ssh key
   uri:
     url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_ssh_key_pub"
     method: GET
@@ -39,18 +39,18 @@
   delay: 1
   retries: 6000
 
-- name: write public ssh key
+- name: ssh-keys | write public ssh key
   copy:
     content: "{{ ssh_key_pub_consul.json[0] | json_query('Value') | b64decode }}"
     dest: /root/.ssh/id_rsa.pub
     mode: 0400
 
-- name: read public ssh key
+- name: ssh-keys | read public ssh key
   slurp:
     src: '/root/.ssh/id_rsa.pub'
   register: ssh_key_pub
 
-- name: enable ssh key for direct root access
+- name: ssh-keys | enable ssh key for direct root access
   authorized_key:
     user: root
     key: "{{ ssh_key_pub['content'] | b64decode }}"

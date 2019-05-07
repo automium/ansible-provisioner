@@ -1,27 +1,27 @@
 ---
 
-- name: ensure /root/.ssh folder exist
+- name: ssh-keys-bootstrap | ensure /root/.ssh folder exist
   file:
     path: /root/.ssh
     state: directory
     mode: 0550
 
-- name: generate ssh keys
+- name: ssh-keys-bootstrap | generate ssh keys
   shell: ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa_enc -q -N "" -P {{ consul_encrypt }}
   args:
     creates: /root/.ssh/id_rsa_enc
 
-- name: read private ssh key
+- name: ssh-keys-bootstrap | read private ssh key
   slurp:
     src: '/root/.ssh/id_rsa_enc'
   register: ssh_key
 
-- name: read public ssh key
+- name: ssh-keys-bootstrap | read public ssh key
   slurp:
     src: '/root/.ssh/id_rsa_enc.pub'
   register: ssh_key_pub
 
-- name: put private ssh key
+- name: ssh-keys-bootstrap | put private ssh key
   uri:
     url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_ssh_key"
     method: PUT
@@ -32,7 +32,7 @@
   delay: 1
   retries: 6000
 
-- name: put public ssh key
+- name: ssh-keys-bootstrap | put public ssh key
   uri:
     url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_ssh_key_pub"
     method: PUT

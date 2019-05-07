@@ -1,6 +1,6 @@
 ---
 
-- name: report that bootstrap node have finished all the tasks
+- name: bootstrap-end | report that bootstrap node have finished all the tasks
   uri:
     url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/custom_bootstrap_end"
     method: PUT
