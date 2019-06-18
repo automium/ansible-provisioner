@@ -13,5 +13,8 @@
 - import_tasks: provisioner-role.yml
   when: provisioner_role_enabled == "true"
 
+- import_tasks: cleanup.yml
+  when: provisioner_role_enabled == "true"
+
 - import_tasks: bootstrap-end.yml
   tags: bootstrap
