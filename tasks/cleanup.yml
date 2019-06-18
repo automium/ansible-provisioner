@@ -1,0 +1,13 @@
+---
+
+- name: cleanup | ensure srm bin exist
+  package: name=secure-delete
+
+- name: cleanup | cleanup ssh keys if present
+  command: srm "{{ item }}"
+  args:
+    removes: "{{ item }}"
+  with_items:
+    - /root/.ssh/id_rsa_enc
+    - /root/.ssh/id_rsa
+    - /root/.ssh/id_rsa.pub
