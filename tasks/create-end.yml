@@ -2,7 +2,7 @@
 
 - name: create-end | report that the creation of the node is finished
   uri:
-    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ consul_path }}/{{ ansible_hostname }}/.create/ongoing"
+    url: "http://{{ consul }}:{{ consul_port }}/v1/kv/{{ cluster_name }}/.create/{{ ansible_hostname }}/ongoing"
     method: DELETE
     status_code: 200
   register: create_end
